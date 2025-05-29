@@ -3,12 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análisis Interactivo Detallado y Guía de Estudio del Sermón: 1 Juan 1:1b-2</title>
+    <title>Análisis Interactivo, Guía de Estudio y Mapa Mental del Sermón: 1 Juan 1:1b-2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            border-bottom-width: 2px;
+            border-color: #3b82f6; /* Tailwind blue-500 */
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        /* Styles for sermon analysis and study guide sections */
         .content-section, .study-guide-content {
             display: none;
         }
@@ -33,184 +47,349 @@
         }
         .scripture-ref {
             font-weight: bold;
-            color: #0056b3; /* Un azul más oscuro para referencias bíblicas */
+            color: #0056b3; 
         }
         .study-guide-main-title {
-            font-size: 1.75rem; /* 28px */
+            font-size: 1.75rem; 
             font-weight: bold;
-            color: #2c5282; /* Un azul más oscuro para el título principal de la guía */
+            color: #2c5282; 
             text-align: center;
             margin-top: 2rem;
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid #e2e8f0; /* Un borde sutil */
+            border-bottom: 2px solid #e2e8f0; 
         }
         .sermon-point-title {
             font-weight: bold;
-            color: #3182ce; /* Tailwind blue-600 */
-            font-size: 1.1em; /* Un poco más grande */
+            color: #3182ce; 
+            font-size: 1.1em; 
             margin-bottom: 0.5rem;
         }
         .sub-point-text {
-             margin-bottom: 0.75rem; /* Espacio entre sub-puntos */
+             margin-bottom: 0.75rem; 
              line-height: 1.6;
         }
         .sub-point-heading {
             font-weight: bold;
-            color: #2b6cb0; /* Tailwind blue-700 */
+            color: #2b6cb0; 
         }
         .reflection-block {
-            background-color: #ebf8ff; /* Tailwind blue-50 */
-            border-left: 4px solid #63b3ed; /* Tailwind blue-300 */
+            background-color: #ebf8ff; 
+            border-left: 4px solid #63b3ed; 
             padding: 0.75rem;
             margin-top: 1rem;
             border-radius: 0.25rem;
         }
+
+        /* Styles for Mind Map (from user) - adjusted to be self-contained */
+        #mindMapTabContent { /* Specific container for mind map styles */
+            /* Styles from user's body tag, applied to the container */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            margin: 0; /* Reset margin for this specific tab content */
+            padding: 20px; /* Add padding directly here */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 95vh;
+            overflow-x: auto;
+        }
+
+        #mindMapContainer {
+            background-color: #2a2a2a;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            max-width: 1200px; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .node-container {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .node {
+            background-color: #3f3f3f;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            min-width: 250px; 
+        }
+        .node:hover {
+            background-color: #555555;
+            transform: translateY(-2px);
+        }
+        .node.root-node {
+            background-color: #1e88e5; 
+            font-size: 1.6em;
+            font-weight: bold;
+            padding: 15px 25px;
+            text-align: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        .node.level-1 {
+            background-color: #4CAF50; 
+            font-weight: bold;
+        }
+        .node.level-2 {
+            background-color: #FFC107; 
+            color: #333;
+        }
+        .node.level-3 {
+            background-color: #FF9800; 
+            color: #333;
+        }
+        .node.level-4 {
+            background-color: #9C27B0; 
+        }
+        .node-content {
+            flex-grow: 1;
+            font-size: 1.1em;
+        }
+        .toggle-icon {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-right: 10px;
+            width: 20px; 
+            text-align: center;
+            cursor: pointer;
+            user-select: none; 
+        }
+        .children-container {
+            margin-left: 30px; 
+            padding-left: 20px;
+            border-left: 2px solid rgba(255, 255, 255, 0.2); 
+            margin-top: 10px;
+        }
+        .children-container.collapsed {
+            display: none;
+        }
+        .node:not(.has-children) .toggle-icon {
+            display: none; 
+        }
+        .node:not(.has-children) {
+            cursor: default; 
+        }
+        .node:not(.has-children):hover {
+            transform: none; 
+            background-color: #3f3f3f; 
+        }
+        @media (max-width: 768px) {
+            #mindMapTabContent #mindMapContainer { /* Ensure specificity */
+                padding: 20px;
+            }
+            #mindMapTabContent .node {
+                min-width: unset; 
+                font-size: 1em;
+                padding: 10px 15px;
+            }
+            #mindMapTabContent .node.root-node {
+                font-size: 1.4em;
+            }
+            #mindMapTabContent .children-container {
+                margin-left: 15px;
+                padding-left: 10px;
+            }
+        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 p-4 md:p-8">
-    <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-lg p-6 md:p-10">
-        <header class="mb-8 text-center">
-            <h1 class="text-3xl md:text-4xl font-bold text-blue-700 mb-2">Análisis Detallado del Sermón</h1>
-            <h2 class="text-xl md:text-2xl font-semibold text-blue-600">"La vida se manifestó | 1 Juan 1:1b-2"</h2>
-            <p class="mt-4 text-gray-600 text-sm md:text-base">
-                El mensaje central del sermón es que Jesucristo, el Verbo de vida, el eterno Dios que estaba con el Padre (<span class="scripture-ref">1 Juan 1:2</span>), se manifestó de forma real y tangible. Los apóstoles son testigos fidedignos de esta manifestación (<span class="scripture-ref">1 Juan 1:1-2</span>), y su testimonio es la base de la proclamación del Evangelio para que tengamos comunión con Dios y entre nosotros (<span class="scripture-ref">1 Juan 1:3</span>), y nuestro gozo sea completo (<span class="scripture-ref">1 Juan 1:4</span>). El contexto es la carta de 1 Juan, escrita por el apóstol para combatir herejías destructoras en iglesias probablemente en Asia Menor <span class="timestamp">(00:00-00:42)</span>.
-            </p>
-             <p class="mt-2 text-gray-600 text-sm md:text-base">El expositor divide su mensaje en tres puntos principales:</p>
-        </header>
+<body class="bg-gray-100 text-gray-800">
+    <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-lg">
+        <div class="border-b border-gray-200">
+            <nav class="-mb-px flex space-x-8 px-4 md:px-10" aria-label="Tabs">
+                <button onclick="openTab(event, 'analysisTab')" class="tab-button active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    Análisis y Guía
+                </button>
+                <button onclick="openTab(event, 'mindMapTab')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    Mapa Mental
+                </button>
+            </nav>
+        </div>
 
-        <div id="analysis-container">
-            <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
-                <div class="section-title bg-blue-500 text-white p-4 flex justify-between items-center" onclick="toggleSection('point1')">
-                    <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">📜</span>El Testimonio de los Apóstoles</h3>
-                    <span class="arrow" id="arrow-point1">▶</span>
-                </div>
-                <div class="content-section p-4 bg-blue-50 border-t border-blue-200" id="content-point1">
-                    <p class="sermon-point-title"><span class="emoji">📜</span>El Testimonio de los Apóstoles <span class="timestamp">(05:20, 06:49)</span>:</p>
-                    <p class="mb-3 text-sm text-gray-700 sub-point-text">
-                        El apóstol Juan, con la pasión de un "hijo del trueno" <span class="timestamp">(00:24)</span>, combate las herejías destructoras <span class="timestamp">(00:24-00:42)</span> que negaban la verdadera humanidad de Cristo. Juan enfatiza que los apóstoles fueron testigos directos y sensoriales de Jesús (<span class="scripture-ref">1 Juan 1:1</span>), estableciendo así la realidad de su encarnación. El testimonio apostólico no se basa en rumores o fábulas (cf. <span class="scripture-ref">2 Pedro 1:16</span>), sino en una experiencia personal y palpable con el Verbo de vida.
-                    </p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">👁️</span>Experiencia Sensorial Directa:</strong> "Lo que hemos oído, lo que hemos visto con nuestros propios ojos, lo que hemos contemplado y lo que han tocado nuestras manos" <span class="timestamp">(06:49, citando <span class="scripture-ref">1 Juan 1:1</span>)</span>. Esto no fue una visión espiritual o un sueño, sino un encuentro real y físico <span class="timestamp">(17:09-18:28)</span>. Jesús mismo invitó a ser tocado tras su resurrección (menciona <span class="scripture-ref">Lucas 24:39</span> en <span class="timestamp">18:28</span>). "Ellos lo vieron, lo oyeron. Lo contemplaron, lo tocaron" <span class="timestamp">(18:28)</span>.</p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">⚔️</span>Combate a las Herejías (Docetismo):</strong> Frente a enseñanzas como el docetismo, que afirmaba que Jesús solo "parecía" tener un cuerpo carnal porque la materia era vista como mala <span class="timestamp">(08:19-08:39)</span>, Juan insiste en la verdadera humanidad de Cristo. "Él no fue ninguna apariencia. La verdad es que nosotros lo oímos, lo vimos, lo contemplamos, lo palpamos, lo tocamos. El Verbo de vida estuvo con nosotros" <span class="timestamp">(09:20)</span>.</p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🏛️</span>Fundamento de la Iglesia y la Salvación:</strong> La correcta doctrina acerca de Cristo es fundamental para la salvación <span class="timestamp">(09:00)</span>. "Si alguien distorsiona, pervierte, daña la doctrina acerca de Cristo, no tiene salvación" <span class="timestamp">(09:00)</span>. El apóstol Pablo advierte sobre predicar "a otro Jesús" <span class="timestamp">(mencionado en 09:39, cf. <span class="scripture-ref">2 Corintios 11:4</span>)</span>. La iglesia está edificada sobre el testimonio de los apóstoles: "Estamos edificados sobre el fundamento de los apóstoles y profetas, siendo Cristo Jesús mismo la piedra angular" <span class="timestamp">(22:11-22:30, citando <span class="scripture-ref">Efesios 2:20</span>)</span>.</p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🚫</span>Rechazo a "Nuevas Revelaciones" fuera de la Escritura:</strong> Juan establece la autoridad apostólica contra aquellos falsos maestros que claman revelaciones privadas o un conocimiento superior <span class="timestamp">(22:30-22:49)</span>. "En cuanto a ustedes, la unción que recibieron de él... permanecen ustedes. Y... no tienen necesidad de que nadie les enseñe [refiriéndose a los falsos maestros con sus propias ideas]" <span class="timestamp">(23:06-23:25, citando <span class="scripture-ref">1 Juan 2:27</span>)</span>. La confianza debe estar en el testimonio apostólico registrado en las Escrituras <span class="timestamp">(23:42)</span>. El predicador menciona que más de 500 personas vieron a Cristo resucitado a la vez <span class="timestamp">(28:18, refiriéndose a <span class="scripture-ref">1 Corintios 15:6</span>)</span>.</p>
-                    
-                    <div class="reflection-block">
-                        <p class="text-sm text-gray-700 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🤔</span>Reflexión/Aplicación/Ánimo:</strong><br>
-                        El expositor anima a los creyentes a ser intencionales en conocer su fe y al Cristo que adoran <span class="timestamp">(14:19-16:09)</span>. "Es importante que tú conozcas a Cristo... es importante que conozcas al Hijo de Dios, quién es Jesucristo... cuando miras a Cristo, tu ser interior es transformado y viene una paz que sobrepasa todo entendimiento. Conocer a Cristo y mirar a Cristo es indispensable, es fundamental para nuestra fe" <span class="timestamp">(13:00-13:38)</span>. Propone dedicar tiempo a la lectura bíblica reflexiva (menciona los evangelios de Mateo y Lucas como ejemplos en <span class="timestamp">25:05</span>), leer buenos libros cristianos y apologéticos <span class="timestamp">(14:19-14:36)</span>, y que los padres asuman la responsabilidad de transmitir la fe a sus hijos <span class="timestamp">(14:55)</span>. El propósito de Juan al escribir es que estén seguros de su fe <span class="timestamp">(15:30, refiriéndose a <span class="scripture-ref">1 Juan 5:13</span>)</span>. "¿Irías a un examen importante sin estudiar?... ¿Por qué nosotros entonces enfrentaríamos las preguntas sobre nuestra fe sin preparación?" <span class="timestamp">(16:09)</span>.</p>
+        <div id="analysisTab" class="tab-content active p-4 md:p-10">
+            <header class="mb-8 text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-blue-700 mb-2">Análisis Detallado del Sermón</h1>
+                <h2 class="text-xl md:text-2xl font-semibold text-blue-600">"La vida se manifestó | 1 Juan 1:1b-2"</h2>
+                <p class="mt-4 text-gray-600 text-sm md:text-base">
+                    El mensaje central del sermón es que Jesucristo, el Verbo de vida, el eterno Dios que estaba con el Padre (<span class="scripture-ref">1 Juan 1:2</span>), se manifestó de forma real y tangible. Los apóstoles son testigos fidedignos de esta manifestación (<span class="scripture-ref">1 Juan 1:1-2</span>), y su testimonio es la base de la proclamación del Evangelio para que tengamos comunión con Dios y entre nosotros (<span class="scripture-ref">1 Juan 1:3</span>), y nuestro gozo sea completo (<span class="scripture-ref">1 Juan 1:4</span>). El contexto es la carta de 1 Juan, escrita por el apóstol para combatir herejías destructoras en iglesias probablemente en Asia Menor <span class="timestamp">(00:00-00:42)</span>.
+                </p>
+                 <p class="mt-2 text-gray-600 text-sm md:text-base">El expositor divide su mensaje en tres puntos principales:</p>
+            </header>
+
+            <div id="analysis-container">
+                <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
+                    <div class="section-title bg-blue-500 text-white p-4 flex justify-between items-center" onclick="toggleSection('point1')">
+                        <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">📜</span>El Testimonio de los Apóstoles</h3>
+                        <span class="arrow" id="arrow-point1">▶</span>
+                    </div>
+                    <div class="content-section p-4 bg-blue-50 border-t border-blue-200" id="content-point1">
+                        <p class="sermon-point-title"><span class="emoji">📜</span>El Testimonio de los Apóstoles <span class="timestamp">(05:20, 06:49)</span>:</p>
+                        <p class="mb-3 text-sm text-gray-700 sub-point-text">
+                            El apóstol Juan, con la pasión de un "hijo del trueno" <span class="timestamp">(00:24)</span>, combate las herejías destructoras <span class="timestamp">(00:24-00:42)</span> que negaban la verdadera humanidad de Cristo. Juan enfatiza que los apóstoles fueron testigos directos y sensoriales de Jesús (<span class="scripture-ref">1 Juan 1:1</span>), estableciendo así la realidad de su encarnación. El testimonio apostólico no se basa en rumores o fábulas (cf. <span class="scripture-ref">2 Pedro 1:16</span>), sino en una experiencia personal y palpable con el Verbo de vida.
+                        </p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">👁️</span>Experiencia Sensorial Directa:</strong> "Lo que hemos oído, lo que hemos visto con nuestros propios ojos, lo que hemos contemplado y lo que han tocado nuestras manos" <span class="timestamp">(06:49, citando <span class="scripture-ref">1 Juan 1:1</span>)</span>. Esto no fue una visión espiritual o un sueño, sino un encuentro real y físico <span class="timestamp">(17:09-18:28)</span>. Jesús mismo invitó a ser tocado tras su resurrección (menciona <span class="scripture-ref">Lucas 24:39</span> en <span class="timestamp">18:28</span>). "Ellos lo vieron, lo oyeron. Lo contemplaron, lo tocaron" <span class="timestamp">(18:28)</span>.</p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">⚔️</span>Combate a las Herejías (Docetismo):</strong> Frente a enseñanzas como el docetismo, que afirmaba que Jesús solo "parecía" tener un cuerpo carnal porque la materia era vista como mala <span class="timestamp">(08:19-08:39)</span>, Juan insiste en la verdadera humanidad de Cristo. "Él no fue ninguna apariencia. La verdad es que nosotros lo oímos, lo vimos, lo contemplamos, lo palpamos, lo tocamos. El Verbo de vida estuvo con nosotros" <span class="timestamp">(09:20)</span>.</p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🏛️</span>Fundamento de la Iglesia y la Salvación:</strong> La correcta doctrina acerca de Cristo es fundamental para la salvación <span class="timestamp">(09:00)</span>. "Si alguien distorsiona, pervierte, daña la doctrina acerca de Cristo, no tiene salvación" <span class="timestamp">(09:00)</span>. El apóstol Pablo advierte sobre predicar "a otro Jesús" <span class="timestamp">(mencionado en 09:39, cf. <span class="scripture-ref">2 Corintios 11:4</span>)</span>. La iglesia está edificada sobre el testimonio de los apóstoles: "Estamos edificados sobre el fundamento de los apóstoles y profetas, siendo Cristo Jesús mismo la piedra angular" <span class="timestamp">(22:11-22:30, citando <span class="scripture-ref">Efesios 2:20</span>)</span>.</p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🚫</span>Rechazo a "Nuevas Revelaciones" fuera de la Escritura:</strong> Juan establece la autoridad apostólica contra aquellos falsos maestros que claman revelaciones privadas o un conocimiento superior <span class="timestamp">(22:30-22:49)</span>. "En cuanto a ustedes, la unción que recibieron de él... permanecen ustedes. Y... no tienen necesidad de que nadie les enseñe [refiriéndose a los falsos maestros con sus propias ideas]" <span class="timestamp">(23:06-23:25, citando <span class="scripture-ref">1 Juan 2:27</span>)</span>. La confianza debe estar en el testimonio apostólico registrado en las Escrituras <span class="timestamp">(23:42)</span>. El predicador menciona que más de 500 personas vieron a Cristo resucitado a la vez <span class="timestamp">(28:18, refiriéndose a <span class="scripture-ref">1 Corintios 15:6</span>)</span>.</p>
+                        
+                        <div class="reflection-block">
+                            <p class="text-sm text-gray-700 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🤔</span>Reflexión/Aplicación/Ánimo:</strong><br>
+                            El expositor anima a los creyentes a ser intencionales en conocer su fe y al Cristo que adoran <span class="timestamp">(14:19-16:09)</span>. "Es importante que tú conozcas a Cristo... es importante que conozcas al Hijo de Dios, quién es Jesucristo... cuando miras a Cristo, tu ser interior es transformado y viene una paz que sobrepasa todo entendimiento. Conocer a Cristo y mirar a Cristo es indispensable, es fundamental para nuestra fe" <span class="timestamp">(13:00-13:38)</span>. Propone dedicar tiempo a la lectura bíblica reflexiva (menciona los evangelios de Mateo y Lucas como ejemplos en <span class="timestamp">25:05</span>), leer buenos libros cristianos y apologéticos <span class="timestamp">(14:19-14:36)</span>, y que los padres asuman la responsabilidad de transmitir la fe a sus hijos <span class="timestamp">(14:55)</span>. El propósito de Juan al escribir es que estén seguros de su fe <span class="timestamp">(15:30, refiriéndose a <span class="scripture-ref">1 Juan 5:13</span>)</span>. "¿Irías a un examen importante sin estudiar?... ¿Por qué nosotros entonces enfrentaríamos las preguntas sobre nuestra fe sin preparación?" <span class="timestamp">(16:09)</span>.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
-                <div class="section-title bg-green-500 text-white p-4 flex justify-between items-center" onclick="toggleSection('point2')">
-                    <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">🌟</span>La Revelación de la Vida</h3>
-                    <span class="arrow" id="arrow-point2">▶</span>
-                </div>
-                <div class="content-section p-4 bg-green-50 border-t border-green-200" id="content-point2">
-                    <p class="sermon-point-title"><span class="emoji">🌟</span>La Revelación de la Vida <span class="timestamp">(05:20, 29:55)</span>:</p>
-                    <p class="mb-3 text-sm text-gray-700 sub-point-text">
-                        Este punto se centra en el significado profundo de "la vida se manifestó" <span class="timestamp">(29:55, citando <span class="scripture-ref">1 Juan 1:2</span>)</span>. No se trata de una vida cualquiera, sino de la Vida Eterna, el mismo Hijo eterno de Dios (<span class="scripture-ref">1 Juan 1:2</span>), la segunda persona de la Trinidad, que se hizo visible y tangible al encarnarse. Esta manifestación es el misterio central de la piedad: "Dios fue manifestado en carne" <span class="timestamp">(04:37, 41:16, 55:22, citando <span class="scripture-ref">1 Timoteo 3:16</span>)</span>.
-                    </p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">✨</span>La Vida se Hizo Visible:</strong> "Y la vida se manifestó. Nosotros la hemos visto y damos testimonio y les anunciamos a ustedes la vida eterna que estaba con el Padre y se manifestó a nosotros" <span class="timestamp">(01:09-01:29, 29:55, citando <span class="scripture-ref">1 Juan 1:2</span>)</span>. "Aquel que es la vida misma, aquel que da vida... se manifestó" <span class="timestamp">(30:18)</span>. Esto se conecta con <span class="scripture-ref">Juan 1:4</span>: "En él estaba la vida, y la vida era la luz de los hombres." <span class="timestamp">(44:52)</span>.</p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">👤</span>El Sujeto de la Encarnación:</strong> "Es el hijo eterno de Dios asumiendo una naturaleza humana completa... Quien se encarna, quien asume carne es el hijo eterno de Dios" <span class="timestamp">(31:21, 31:45)</span>. Esto ocurrió "cuando vino el cumplimiento del tiempo, Dios envió a su hijo nacido de mujer y nacido bajo la ley" <span class="timestamp">(30:36, citando <span class="scripture-ref">Gálatas 4:4</span>)</span>. "El Verbo se hizo carne y habitó entre nosotros y vimos su gloria, gloria como unigénito del Padre, lleno de gracia y de verdad" <span class="timestamp">(30:57-31:21, citando <span class="scripture-ref">Juan 1:14</span>)</span>.</p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🤲</span>La Naturaleza de la Encarnación (Unión Hipostática):</strong> Jesús asumió una naturaleza humana completa (intelecto, voluntad, cuerpo) sin que su naturaleza divina cambiara o se mezclara con la humana <span class="timestamp">(32:12-33:15)</span>. "La persona de Cristo tiene una verdadera naturaleza divina y una verdadera naturaleza humana... se unen en la única persona del Hijo de Dios... sin confusión, sin separación, sin cambio" <span class="timestamp">(33:15-35:08)</span>. Al hablar del "despojo" de Cristo en <span class="scripture-ref">Filipenses 2:5 y siguientes</span> <span class="timestamp">(35:08)</span>, el predicador aclara que no significó que Jesús dejara sus atributos divinos, sino que veló su gloria <span class="timestamp">(35:48-36:32)</span>.</p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🏃‍♂️</span>Dios Tomó la Iniciativa para Rescatar:</strong> "La única religión del mundo donde Dios toma la iniciativa en nuestra salvación es el cristianismo... el Hijo del Hombre vino a buscar y a salvar lo que se había perdido... asumió una naturaleza como la nuestra para rescatarnos" <span class="timestamp">(37:32-38:23)</span>. Como dice <span class="scripture-ref">Juan 3:16</span>, "Porque de tal manera amó Dios al mundo, que dio a su hijo unigénito..." <span class="timestamp">(mencionado en 40:59)</span>.</p>
-
-                    <div class="reflection-block">
-                        <p class="text-sm text-gray-700 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">💡</span>Reflexión/Aplicación/Ánimo:</strong><br>
-                        El predicador enfatiza la magnitud del amor de Dios al encarnarse para nuestra salvación. "¿Qué más puede hacer Dios por ti? Dios no puede hacer nada más. Dios ha dado a su hijo" <span class="timestamp">(40:59-41:16)</span>. "Puedes pensar un poco en tu entrega a Cristo... quien se encarnó para rescatarte, para salvarte, para redimirte" <span class="timestamp">(42:17)</span>. "¿No es Cristo el hijo de Dios lo que nuestra alma necesita urgentemente para acudir a él? ... Pero el hijo de Dios vino a librarnos de nuestra condición caída" <span class="timestamp">(39:03-39:27)</span>. Tenemos un Sumo Sacerdote que puede compadecerse de nuestras debilidades <span class="timestamp">(48:52, aludiendo a <span class="scripture-ref">Hebreos 4:15</span>)</span>, por lo que podemos acercarnos con confianza ante el trono de la gracia (<span class="scripture-ref">Hebreos 4:16</span>).</p>
+    
+                <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
+                    <div class="section-title bg-green-500 text-white p-4 flex justify-between items-center" onclick="toggleSection('point2')">
+                        <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">🌟</span>La Revelación de la Vida</h3>
+                        <span class="arrow" id="arrow-point2">▶</span>
+                    </div>
+                    <div class="content-section p-4 bg-green-50 border-t border-green-200" id="content-point2">
+                        <p class="sermon-point-title"><span class="emoji">🌟</span>La Revelación de la Vida <span class="timestamp">(05:20, 29:55)</span>:</p>
+                        <p class="mb-3 text-sm text-gray-700 sub-point-text">
+                            Este punto se centra en el significado profundo de "la vida se manifestó" <span class="timestamp">(29:55, citando <span class="scripture-ref">1 Juan 1:2</span>)</span>. No se trata de una vida cualquiera, sino de la Vida Eterna, el mismo Hijo eterno de Dios (<span class="scripture-ref">1 Juan 1:2</span>), la segunda persona de la Trinidad, que se hizo visible y tangible al encarnarse. Esta manifestación es el misterio central de la piedad: "Dios fue manifestado en carne" <span class="timestamp">(04:37, 41:16, 55:22, citando <span class="scripture-ref">1 Timoteo 3:16</span>)</span>.
+                        </p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">✨</span>La Vida se Hizo Visible:</strong> "Y la vida se manifestó. Nosotros la hemos visto y damos testimonio y les anunciamos a ustedes la vida eterna que estaba con el Padre y se manifestó a nosotros" <span class="timestamp">(01:09-01:29, 29:55, citando <span class="scripture-ref">1 Juan 1:2</span>)</span>. "Aquel que es la vida misma, aquel que da vida... se manifestó" <span class="timestamp">(30:18)</span>. Esto se conecta con <span class="scripture-ref">Juan 1:4</span>: "En él estaba la vida, y la vida era la luz de los hombres." <span class="timestamp">(44:52)</span>.</p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">👤</span>El Sujeto de la Encarnación:</strong> "Es el hijo eterno de Dios asumiendo una naturaleza humana completa... Quien se encarna, quien asume carne es el hijo eterno de Dios" <span class="timestamp">(31:21, 31:45)</span>. Esto ocurrió "cuando vino el cumplimiento del tiempo, Dios envió a su hijo nacido de mujer y nacido bajo la ley" <span class="timestamp">(30:36, citando <span class="scripture-ref">Gálatas 4:4</span>)</span>. "El Verbo se hizo carne y habitó entre nosotros y vimos su gloria, gloria como unigénito del Padre, lleno de gracia y de verdad" <span class="timestamp">(30:57-31:21, citando <span class="scripture-ref">Juan 1:14</span>)</span>.</p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🤲</span>La Naturaleza de la Encarnación (Unión Hipostática):</strong> Jesús asumió una naturaleza humana completa (intelecto, voluntad, cuerpo) sin que su naturaleza divina cambiara o se mezclara con la humana <span class="timestamp">(32:12-33:15)</span>. "La persona de Cristo tiene una verdadera naturaleza divina y una verdadera naturaleza humana... se unen en la única persona del Hijo de Dios... sin confusión, sin separación, sin cambio" <span class="timestamp">(33:15-35:08)</span>. Al hablar del "despojo" de Cristo en <span class="scripture-ref">Filipenses 2:5 y siguientes</span> <span class="timestamp">(35:08)</span>, el predicador aclara que no significó que Jesús dejara sus atributos divinos, sino que veló su gloria <span class="timestamp">(35:48-36:32)</span>.</p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🏃‍♂️</span>Dios Tomó la Iniciativa para Rescatar:</strong> "La única religión del mundo donde Dios toma la iniciativa en nuestra salvación es el cristianismo... el Hijo del Hombre vino a buscar y a salvar lo que se había perdido... asumió una naturaleza como la nuestra para rescatarnos" <span class="timestamp">(37:32-38:23)</span>. Como dice <span class="scripture-ref">Juan 3:16</span>, "Porque de tal manera amó Dios al mundo, que dio a su hijo unigénito..." <span class="timestamp">(mencionado en 40:59)</span>.</p>
+    
+                        <div class="reflection-block">
+                            <p class="text-sm text-gray-700 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">💡</span>Reflexión/Aplicación/Ánimo:</strong><br>
+                            El predicador enfatiza la magnitud del amor de Dios al encarnarse para nuestra salvación. "¿Qué más puede hacer Dios por ti? Dios no puede hacer nada más. Dios ha dado a su hijo" <span class="timestamp">(40:59-41:16)</span>. "Puedes pensar un poco en tu entrega a Cristo... quien se encarnó para rescatarte, para salvarte, para redimirte" <span class="timestamp">(42:17)</span>. "¿No es Cristo el hijo de Dios lo que nuestra alma necesita urgentemente para acudir a él? ... Pero el hijo de Dios vino a librarnos de nuestra condición caída" <span class="timestamp">(39:03-39:27)</span>. Tenemos un Sumo Sacerdote que puede compadecerse de nuestras debilidades <span class="timestamp">(48:52, aludiendo a <span class="scripture-ref">Hebreos 4:15</span>)</span>, por lo que podemos acercarnos con confianza ante el trono de la gracia (<span class="scripture-ref">Hebreos 4:16</span>).</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
-                <div class="section-title bg-purple-500 text-white p-4 flex justify-between items-center" onclick="toggleSection('point3')">
-                    <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">📢</span>La Proclamación del Evangelio</h3>
-                    <span class="arrow" id="arrow-point3">▶</span>
-                </div>
-                <div class="content-section p-4 bg-purple-50 border-t border-purple-200" id="content-point3">
-                    <p class="sermon-point-title"><span class="emoji">📢</span>La Proclamación del Evangelio <span class="timestamp">(05:20, 43:27)</span>:</p>
-                    <p class="mb-3 text-sm text-gray-700 sub-point-text">
-                        Como consecuencia de haber visto y experimentado la vida manifestada (Jesucristo, <span class="scripture-ref">1 Juan 1:2</span>), los apóstoles tienen la solemne responsabilidad de testificar y anunciar esta verdad. Este testimonio no es una simple narración, sino una proclamación autoritativa de la vida eterna disponible en Cristo, quien venció la muerte, la corrupción y ofrece reconciliación con Dios.
-                    </p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🗣️</span>Testimonio y Anuncio Apostólico:</strong> "Nosotros la hemos visto y ¿qué hacemos con eso?... Damos testimonio y les anunciamos a ustedes... la vida eterna que estaba con el Padre y se manifestó a nosotros" <span class="timestamp">(43:06, citando <span class="scripture-ref">1 Juan 1:2</span>)</span>. La palabra "testificar" (martureo) implica una declaración veraz <span class="timestamp">(43:27-44:07)</span>.</p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">✝️</span>Cristo Vencedor de la Muerte y la Corrupción:</strong> La proclamación enfatiza que "Jesucristo venció el dominio de la muerte" <span class="timestamp">(45:50-46:11)</span>. "Él vino a vencer la muerte... el efecto de la corrupción del pecado" <span class="timestamp">(46:50-47:08)</span>. Por esto Pablo exclama en <span class="scripture-ref">1 Corintios 15:55</span>, "¿Dónde está, oh muerte, tu aguijón? ¿Dónde está, oh sepulcro, tu victoria?" <span class="timestamp">(mencionado en 47:08)</span>.</p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">💖</span>Rescate de Nosotros Mismos y Esperanza:</strong> Dios vino a "rescatarnos de nosotros mismos" <span class="timestamp">(47:49)</span>. "¿Quién puede librarnos de las tinieblas que hay en nuestro corazón?" <span class="timestamp">(48:13-48:33)</span>. Jesús dijo "conoceréis la verdad y la verdad os hará libres" <span class="timestamp">(49:42, citando <span class="scripture-ref">Juan 8:32</span>)</span>. La invitación es: "Vengan y beban gratuitamente del agua de vida" <span class="timestamp">(49:42, aludiendo a <span class="scripture-ref">Apocalipsis 21:6</span> o <span class="scripture-ref">22:17</span>)</span>.</p>
-                    <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">⚖️</span>La Justicia y la Justificación en la Cruz:</strong> El Evangelio proclama que, aunque todos pecaron <span class="timestamp">(50:25, aludiendo a <span class="scripture-ref">Romanos 3:10-12, 3:23</span>)</span> y merecen la ira de Dios <span class="timestamp">(50:44, citando <span class="scripture-ref">Romanos 1:30</span> y <span class="scripture-ref">Efesios 2:3</span>)</span>, "Pero Dios que es rico en misericordia... aún estando nosotros muertos en pecado, envió a su hijo para darnos vida" <span class="timestamp">(51:19-51:41, aludiendo a <span class="scripture-ref">Efesios 2:4-5</span>)</span>. "El castigo que debía caer sobre mí cayó sobre él. Él es el justo que muere por los injustos (cf. <span class="scripture-ref">1 Pedro 3:18</span>). El que no conoció pecado, por nosotros lo hizo pecado (cf. <span class="scripture-ref">2 Corintios 5:21</span>)" <span class="timestamp">(51:41-52:23)</span>.</p>
-
-                    <div class="reflection-block">
-                        <p class="text-sm text-gray-700 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🙏</span>Reflexión/Aplicación/Ánimo:</strong><br>
-                        La proclamación del evangelio es un llamado a reconocer nuestra condición de pecadores, pero también a abrazar la buena noticia de que Jesús tomó nuestro lugar <span class="timestamp">(52:23)</span>. "La única manera en que nosotros podemos conocer a Dios es porque él se ha revelado... El hijo de Dios se manifestó" <span class="timestamp">(53:37-53:56, reiterando <span class="scripture-ref">1 Juan 1:2</span>)</span>. El sermón concluye con una oración para que las almas se entreguen a Cristo, porque "solo a través de Cristo nosotros podemos tener comunión contigo [el Padre]" <span class="timestamp">(55:53-56:21, cf. <span class="scripture-ref">1 Juan 1:3</span>)</span>.</p>
+    
+                <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
+                    <div class="section-title bg-purple-500 text-white p-4 flex justify-between items-center" onclick="toggleSection('point3')">
+                        <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">📢</span>La Proclamación del Evangelio</h3>
+                        <span class="arrow" id="arrow-point3">▶</span>
+                    </div>
+                    <div class="content-section p-4 bg-purple-50 border-t border-purple-200" id="content-point3">
+                        <p class="sermon-point-title"><span class="emoji">📢</span>La Proclamación del Evangelio <span class="timestamp">(05:20, 43:27)</span>:</p>
+                        <p class="mb-3 text-sm text-gray-700 sub-point-text">
+                            Como consecuencia de haber visto y experimentado la vida manifestada (Jesucristo, <span class="scripture-ref">1 Juan 1:2</span>), los apóstoles tienen la solemne responsabilidad de testificar y anunciar esta verdad. Este testimonio no es una simple narración, sino una proclamación autoritativa de la vida eterna disponible en Cristo, quien venció la muerte, la corrupción y ofrece reconciliación con Dios.
+                        </p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🗣️</span>Testimonio y Anuncio Apostólico:</strong> "Nosotros la hemos visto y ¿qué hacemos con eso?... Damos testimonio y les anunciamos a ustedes... la vida eterna que estaba con el Padre y se manifestó a nosotros" <span class="timestamp">(43:06, citando <span class="scripture-ref">1 Juan 1:2</span>)</span>. La palabra "testificar" (martureo) implica una declaración veraz <span class="timestamp">(43:27-44:07)</span>.</p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">✝️</span>Cristo Vencedor de la Muerte y la Corrupción:</strong> La proclamación enfatiza que "Jesucristo venció el dominio de la muerte" <span class="timestamp">(45:50-46:11)</span>. "Él vino a vencer la muerte... el efecto de la corrupción del pecado" <span class="timestamp">(46:50-47:08)</span>. Por esto Pablo exclama en <span class="scripture-ref">1 Corintios 15:55</span>, "¿Dónde está, oh muerte, tu aguijón? ¿Dónde está, oh sepulcro, tu victoria?" <span class="timestamp">(mencionado en 47:08)</span>.</p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">💖</span>Rescate de Nosotros Mismos y Esperanza:</strong> Dios vino a "rescatarnos de nosotros mismos" <span class="timestamp">(47:49)</span>. "¿Quién puede librarnos de las tinieblas que hay en nuestro corazón?" <span class="timestamp">(48:13-48:33)</span>. Jesús dijo "conoceréis la verdad y la verdad os hará libres" <span class="timestamp">(49:42, citando <span class="scripture-ref">Juan 8:32</span>)</span>. La invitación es: "Vengan y beban gratuitamente del agua de vida" <span class="timestamp">(49:42, aludiendo a <span class="scripture-ref">Apocalipsis 21:6</span> o <span class="scripture-ref">22:17</span>)</span>.</p>
+                        <p class="text-sm text-gray-600 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">⚖️</span>La Justicia y la Justificación en la Cruz:</strong> El Evangelio proclama que, aunque todos pecaron <span class="timestamp">(50:25, aludiendo a <span class="scripture-ref">Romanos 3:10-12, 3:23</span>)</span> y merecen la ira de Dios <span class="timestamp">(50:44, citando <span class="scripture-ref">Romanos 1:30</span> y <span class="scripture-ref">Efesios 2:3</span>)</span>, "Pero Dios que es rico en misericordia... aún estando nosotros muertos en pecado, envió a su hijo para darnos vida" <span class="timestamp">(51:19-51:41, aludiendo a <span class="scripture-ref">Efesios 2:4-5</span>)</span>. "El castigo que debía caer sobre mí cayó sobre él. Él es el justo que muere por los injustos (cf. <span class="scripture-ref">1 Pedro 3:18</span>). El que no conoció pecado, por nosotros lo hizo pecado (cf. <span class="scripture-ref">2 Corintios 5:21</span>)" <span class="timestamp">(51:41-52:23)</span>.</p>
+    
+                        <div class="reflection-block">
+                            <p class="text-sm text-gray-700 pl-4 sub-point-text"><strong class="sub-point-heading"><span class="emoji">🙏</span>Reflexión/Aplicación/Ánimo:</strong><br>
+                            La proclamación del evangelio es un llamado a reconocer nuestra condición de pecadores, pero también a abrazar la buena noticia de que Jesús tomó nuestro lugar <span class="timestamp">(52:23)</span>. "La única manera en que nosotros podemos conocer a Dios es porque él se ha revelado... El hijo de Dios se manifestó" <span class="timestamp">(53:37-53:56, reiterando <span class="scripture-ref">1 Juan 1:2</span>)</span>. El sermón concluye con una oración para que las almas se entreguen a Cristo, porque "solo a través de Cristo nosotros podemos tener comunión contigo [el Padre]" <span class="timestamp">(55:53-56:21, cf. <span class="scripture-ref">1 Juan 1:3</span>)</span>.</p>
+                        </div>
                     </div>
                 </div>
+            </div> <div id="study-guide-container" class="mt-12">
+                <h2 class="study-guide-main-title">Guía de Estudio: "La Vida se Manifestó" (<span class="scripture-ref">1 Juan 1:1b-2</span>)</h2>
+    
+                <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
+                    <div class="study-guide-title bg-gray-600 text-white p-4 flex justify-between items-center" onclick="toggleStudySection('study1')">
+                        <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">📜</span>1. El testimonio de los apóstoles</h3>
+                        <span class="study-arrow" id="study-arrow-study1">▶</span>
+                    </div>
+                    <div class="study-guide-content p-4 bg-gray-50 border-t border-gray-200" id="study-content-study1">
+                        <p class="mb-4 text-gray-700">Nuestra fe se ancla en el testimonio directo y confiable de los apóstoles sobre Jesucristo, el Verbo de vida, tal como lo experimentaron y transmitieron (<span class="scripture-ref">1 Juan 1:1</span>; <span class="scripture-ref">2 Pedro 1:16</span>).</p>
+                        
+                        <h4 class="font-semibold text-gray-700 mt-4 mb-2">Preguntas de Reflexión Profunda:</h4>
+                        <ul class="list-disc ml-5 space-y-2 text-sm text-gray-600">
+                            <li>Ante el escepticismo y la diversidad de pensamiento en Bogotá, ¿cómo impacta tu confianza y estudio personal de las Escrituras el saber que la fe cristiana se basa en el testimonio ocular de los apóstoles sobre Cristo, y no en mitos o ideas abstractas?</li>
+                            <li>Los apóstoles fueron intencionales al compartir lo que vieron y oyeron. ¿De qué manera específica puedes ser más intencional esta semana al vivir y comunicar la verdad de Cristo en tu entorno particular en Bogotá, ya sea en tu familia, trabajo o comunidad?</li>
+                        </ul>
+    
+                        <h4 class="font-semibold text-gray-700 mt-6 mb-2">Aplicación Práctica Contextualizada (Bogotá):</h4>
+                        <p class="text-sm text-gray-600"><strong class="text-gray-700">Fortalece tu Convicción y Transmisión de la Fe:</strong> En un contexto bogotano diverso y a veces desafiante para la fe, decide anclar firmemente tu comprensión de Cristo en el testimonio apostólico mediante el estudio diligente de la Palabra. Al mismo tiempo, busca ser intencional en la transmisión de esta fe, ya sea en la crianza de tus hijos, en el discipulado, o al compartir con otros el fundamento sólido de tu esperanza en Jesús, adaptando el mensaje con sabiduría pero sin diluir su verdad.</p>
+                    </div>
+                </div>
+    
+                <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
+                    <div class="study-guide-title bg-gray-600 text-white p-4 flex justify-between items-center" onclick="toggleStudySection('study2')">
+                        <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">✨</span>2. La revelación de la vida</h3>
+                        <span class="study-arrow" id="study-arrow-study2">▶</span>
+                    </div>
+                    <div class="study-guide-content p-4 bg-gray-50 border-t border-gray-200" id="study-content-study2">
+                        <p class="mb-4 text-gray-700">La encarnación –"la vida se manifestó" (<span class="scripture-ref">1 Juan 1:2</span>)– revela que el Hijo Eterno de Dios se hizo plenamente humano (<span class="scripture-ref">Juan 1:14</span>; <span class="scripture-ref">Filipenses 2:5-7</span>), entrando en nuestra historia y compartiendo nuestra condición.</p>
+                        
+                        <h4 class="font-semibold text-gray-700 mt-4 mb-2">Preguntas de Reflexión Profunda:</h4>
+                        <ul class="list-disc ml-5 space-y-2 text-sm text-gray-600">
+                            <li>Considerando la "kenosis" o humillación voluntaria de Cristo al encarnarse (<span class="scripture-ref">Filipenses 2:5-7</span>), ¿cómo te desafía su ejemplo a dejar de lado el orgullo o la búsqueda de estatus y a servir con humildad a otros en las interacciones diarias que tienes en Bogotá?</li>
+                            <li>Sabiendo que Jesús, al encarnarse, experimentó las alegrías, tristezas y limitaciones de la vida humana, ¿cómo te ayuda esto a acercarte a Él con tus propias luchas y sufrimientos específicos del contexto bogotano, confiando en su comprensión y consuelo?</li>
+                        </ul>
+    
+                        <h4 class="font-semibold text-gray-700 mt-6 mb-2">Aplicación Práctica Contextualizada (Bogotá):</h4>
+                        <p class="text-sm text-gray-600"><strong class="text-gray-700">Vive la Compasión Encarnada en la Ciudad:</strong> Inspirado por la encarnación de Cristo, busca activamente oportunidades para mostrar compasión y servicio práctico a las personas en Bogotá, especialmente a los más vulnerables (aquellos en hogares disfuncionales, con problemas de salud mental, o enfrentando dificultades económicas). Que tu fe se traduzca en acciones que reflejen el amor de un Dios que se hizo cercano y entiende el sufrimiento humano, ofreciendo esperanza real en medio de los desafíos urbanos.</p>
+                    </div>
+                </div>
+    
+                <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
+                    <div class="study-guide-title bg-gray-600 text-white p-4 flex justify-between items-center" onclick="toggleStudySection('study3')">
+                        <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">📢</span>3. La proclamación del evangelio</h3>
+                        <span class="study-arrow" id="study-arrow-study3">▶</span>
+                    </div>
+                    <div class="study-guide-content p-4 bg-gray-50 border-t border-gray-200" id="study-content-study3">
+                        <p class="mb-4 text-gray-700">El encuentro con Cristo manifestado impulsa a los creyentes a testificar y anunciar la vida eterna disponible en Él (<span class="scripture-ref">1 Juan 1:2</span>), proclamando su victoria sobre el pecado y la muerte.</p>
+                        
+                        <h4 class="font-semibold text-gray-700 mt-4 mb-2">Preguntas de Reflexión Profunda:</h4>
+                        <ul class="list-disc ml-5 space-y-2 text-sm text-gray-600">
+                            <li>El evangelio proclama que Jesús es el único camino al Padre (<span class="scripture-ref">Juan 14:6</span>) y el único que ofrece verdadera liberación del pecado. ¿Cómo puedes sostener esta convicción con gracia y amor en tus conversaciones en una Bogotá pluralista, y qué pasos estás tomando para que tu propia vida sea un testimonio creíble de esta verdad transformadora?</li>
+                            <li>Si Cristo es la respuesta a las necesidades más profundas del alma y Aquel que nos libra de temores y angustias, ¿cómo estás cultivando una relación personal con Él que te lleve a una mayor entrega, amor y obediencia, reflejando la esperanza del evangelio en tu día a día?</li>
+                        </ul>
+    
+                        <h4 class="font-semibold text-gray-700 mt-6 mb-2">Aplicación Práctica Contextualizada (Bogotá):</h4>
+                        <p class="text-sm text-gray-600"><strong class="text-gray-700">Comparte el Evangelio con Integridad y Relevancia:</strong> En Bogotá, donde muchos buscan esperanza y sentido, comprométete a compartir el mensaje de Jesucristo de una manera que sea tanto fiel a las Escrituras como relevante para los desafíos contemporáneos. Esto implica vivir con integridad, estar preparado para explicar tu fe con mansedumbre (considerando incluso el impacto de la IA y otras tendencias), y mostrar cómo el evangelio ofrece respuestas verdaderas a las luchas por la identidad, el propósito y la restauración que se viven en la ciudad.</p>
+                    </div>
+                </div>
+    
+            </div> 
+        </div>
+
+        <div id="mindMapTab" class="tab-content">
+            <div id="mindMapTabContent">
+                <div id="mindMapContainer"></div>
             </div>
-        </div> <div id="study-guide-container" class="mt-12">
-            <h2 class="study-guide-main-title">Guía de Estudio: "La Vida se Manifestó" (<span class="scripture-ref">1 Juan 1:1b-2</span>)</h2>
+        </div>
 
-            <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
-                <div class="study-guide-title bg-gray-600 text-white p-4 flex justify-between items-center" onclick="toggleStudySection('study1')">
-                    <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">📜</span>1. El testimonio de los apóstoles</h3>
-                    <span class="study-arrow" id="study-arrow-study1">▶</span>
-                </div>
-                <div class="study-guide-content p-4 bg-gray-50 border-t border-gray-200" id="study-content-study1">
-                    <p class="mb-4 text-gray-700">Nuestra fe se ancla en el testimonio directo y confiable de los apóstoles sobre Jesucristo, el Verbo de vida, tal como lo experimentaron y transmitieron (<span class="scripture-ref">1 Juan 1:1</span>; <span class="scripture-ref">2 Pedro 1:16</span>).</p>
-                    
-                    <h4 class="font-semibold text-gray-700 mt-4 mb-2">Preguntas de Reflexión Profunda:</h4>
-                    <ul class="list-disc ml-5 space-y-2 text-sm text-gray-600">
-                        <li>Ante el escepticismo y la diversidad de pensamiento en Bogotá, ¿cómo impacta tu confianza y estudio personal de las Escrituras el saber que la fe cristiana se basa en el testimonio ocular de los apóstoles sobre Cristo, y no en mitos o ideas abstractas?</li>
-                        <li>Los apóstoles fueron intencionales al compartir lo que vieron y oyeron. ¿De qué manera específica puedes ser más intencional esta semana al vivir y comunicar la verdad de Cristo en tu entorno particular en Bogotá, ya sea en tu familia, trabajo o comunidad?</li>
-                    </ul>
-
-                    <h4 class="font-semibold text-gray-700 mt-6 mb-2">Aplicación Práctica Contextualizada (Bogotá):</h4>
-                    <p class="text-sm text-gray-600"><strong class="text-gray-700">Fortalece tu Convicción y Transmisión de la Fe:</strong> En un contexto bogotano diverso y a veces desafiante para la fe, decide anclar firmemente tu comprensión de Cristo en el testimonio apostólico mediante el estudio diligente de la Palabra. Al mismo tiempo, busca ser intencional en la transmisión de esta fe, ya sea en la crianza de tus hijos, en el discipulado, o al compartir con otros el fundamento sólido de tu esperanza en Jesús, adaptando el mensaje con sabiduría pero sin diluir su verdad.</p>
-                </div>
-            </div>
-
-            <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
-                <div class="study-guide-title bg-gray-600 text-white p-4 flex justify-between items-center" onclick="toggleStudySection('study2')">
-                    <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">✨</span>2. La revelación de la vida</h3>
-                    <span class="study-arrow" id="study-arrow-study2">▶</span>
-                </div>
-                <div class="study-guide-content p-4 bg-gray-50 border-t border-gray-200" id="study-content-study2">
-                    <p class="mb-4 text-gray-700">La encarnación –"la vida se manifestó" (<span class="scripture-ref">1 Juan 1:2</span>)– revela que el Hijo Eterno de Dios se hizo plenamente humano (<span class="scripture-ref">Juan 1:14</span>; <span class="scripture-ref">Filipenses 2:5-7</span>), entrando en nuestra historia y compartiendo nuestra condición.</p>
-                    
-                    <h4 class="font-semibold text-gray-700 mt-4 mb-2">Preguntas de Reflexión Profunda:</h4>
-                    <ul class="list-disc ml-5 space-y-2 text-sm text-gray-600">
-                        <li>Considerando la "kenosis" o humillación voluntaria de Cristo al encarnarse (<span class="scripture-ref">Filipenses 2:5-7</span>), ¿cómo te desafía su ejemplo a dejar de lado el orgullo o la búsqueda de estatus y a servir con humildad a otros en las interacciones diarias que tienes en Bogotá?</li>
-                        <li>Sabiendo que Jesús, al encarnarse, experimentó las alegrías, tristezas y limitaciones de la vida humana, ¿cómo te ayuda esto a acercarte a Él con tus propias luchas y sufrimientos específicos del contexto bogotano, confiando en su comprensión y consuelo?</li>
-                    </ul>
-
-                    <h4 class="font-semibold text-gray-700 mt-6 mb-2">Aplicación Práctica Contextualizada (Bogotá):</h4>
-                    <p class="text-sm text-gray-600"><strong class="text-gray-700">Vive la Compasión Encarnada en la Ciudad:</strong> Inspirado por la encarnación de Cristo, busca activamente oportunidades para mostrar compasión y servicio práctico a las personas en Bogotá, especialmente a los más vulnerables (aquellos en hogares disfuncionales, con problemas de salud mental, o enfrentando dificultades económicas). Que tu fe se traduzca en acciones que reflejen el amor de un Dios que se hizo cercano y entiende el sufrimiento humano, ofreciendo esperanza real en medio de los desafíos urbanos.</p>
-                </div>
-            </div>
-
-            <div class="mb-6 border border-gray-300 rounded-lg overflow-hidden">
-                <div class="study-guide-title bg-gray-600 text-white p-4 flex justify-between items-center" onclick="toggleStudySection('study3')">
-                    <h3 class="text-lg md:text-xl font-semibold"><span class="emoji">📢</span>3. La proclamación del evangelio</h3>
-                    <span class="study-arrow" id="study-arrow-study3">▶</span>
-                </div>
-                <div class="study-guide-content p-4 bg-gray-50 border-t border-gray-200" id="study-content-study3">
-                    <p class="mb-4 text-gray-700">El encuentro con Cristo manifestado impulsa a los creyentes a testificar y anunciar la vida eterna disponible en Él (<span class="scripture-ref">1 Juan 1:2</span>), proclamando su victoria sobre el pecado y la muerte.</p>
-                    
-                    <h4 class="font-semibold text-gray-700 mt-4 mb-2">Preguntas de Reflexión Profunda:</h4>
-                    <ul class="list-disc ml-5 space-y-2 text-sm text-gray-600">
-                        <li>El evangelio proclama que Jesús es el único camino al Padre (<span class="scripture-ref">Juan 14:6</span>) y el único que ofrece verdadera liberación del pecado. ¿Cómo puedes sostener esta convicción con gracia y amor en tus conversaciones en una Bogotá pluralista, y qué pasos estás tomando para que tu propia vida sea un testimonio creíble de esta verdad transformadora?</li>
-                        <li>Si Cristo es la respuesta a las necesidades más profundas del alma y Aquel que nos libra de temores y angustias, ¿cómo estás cultivando una relación personal con Él que te lleve a una mayor entrega, amor y obediencia, reflejando la esperanza del evangelio en tu día a día?</li>
-                    </ul>
-
-                    <h4 class="font-semibold text-gray-700 mt-6 mb-2">Aplicación Práctica Contextualizada (Bogotá):</h4>
-                    <p class="text-sm text-gray-600"><strong class="text-gray-700">Comparte el Evangelio con Integridad y Relevancia:</strong> En Bogotá, donde muchos buscan esperanza y sentido, comprométete a compartir el mensaje de Jesucristo de una manera que sea tanto fiel a las Escrituras como relevante para los desafíos contemporáneos. Esto implica vivir con integridad, estar preparado para explicar tu fe con mansedumbre (considerando incluso el impacto de la IA y otras tendencias), y mostrar cómo el evangelio ofrece respuestas verdaderas a las luchas por la identidad, el propósito y la restauración que se viven en la ciudad.</p>
-                </div>
-            </div>
-
-        </div> <footer class="mt-10 pt-6 border-t border-gray-300 text-center">
-            <p class="text-sm text-gray-500">&copy; Análisis y Guía de Estudio generados con base en la transcripción proporcionada.</p>
+        <footer class="mt-10 pt-6 border-t border-gray-300 text-center">
+            <p class="text-sm text-gray-500">&copy; Análisis, Guía de Estudio y Mapa Mental generados con base en la transcripción proporcionada.</p>
         </footer>
     </div>
 
     <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+
+            // If mindmap tab is opened, and it hasn't been initialized, initialize it.
+            if (tabName === 'mindMapTab' && !document.getElementById('mindMapContainer').hasChildNodes()) {
+                initializeMindMap();
+            }
+        }
+
+        // Initialize with the first tab open
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementsByClassName('tab-button')[0].click();
+        });
+
         function toggleSection(sectionId) {
             const content = document.getElementById('content-' + sectionId);
             const arrow = document.getElementById('arrow-' + sectionId);
@@ -238,6 +417,143 @@
                 arrow.textContent = '▼';
             }
         }
+
+        // Mind Map Script (from user)
+        const mindMapData = {
+            "name": "La Vida Manifestada (1 Juan 1:1b-2)",
+            "children": [
+                {
+                    "name": "Contexto de la Carta",
+                    "children": [
+                        {"name": "Autor: Apóstol Juan"},
+                        {"name": "Audiencia: Iglesias en Asia Menor"},
+                        {
+                            "name": "Problema: Falsas enseñanzas (Gnosticismo, Docetismo)",
+                            "children": [{"name": "Consecuencia: Herejías destructoras"}]
+                        },
+                        {
+                            "name": "Propósito: Combatir falsedades y dar certeza de fe",
+                            "children": [{"name": "Objetivo: Establecer comunión"}]
+                        }
+                    ]
+                },
+                {
+                    "name": "El Misterio de Dios",
+                    "children": [
+                        {"name": "No es el 'qué' del cosmos, sino el 'quién'"},
+                        {
+                            "name": "Revelación de Dios",
+                            "children": [{"name": "Resultado: Dios se hizo carne"}]
+                        }
+                    ]
+                },
+                {
+                    "name": "Tres Puntos Clave",
+                    "children": [
+                        {
+                            "name": "1. Testimonio de los Apóstoles",
+                            "children": [
+                                {"name": "Experiencia Sensorial con Cristo (oído, visto, tocado)"},
+                                {"name": "Enfrenta Herejías (Docetismo)"},
+                                {"name": "Importancia del Testimonio para la salvación"},
+                                {"name": "Autoridad Apostólica (testigos de primera mano)"},
+                                {"name": "Conociendo el Testimonio (a través de Escrituras)"},
+                                {"name": "Testigos múltiples y concordantes"}
+                            ]
+                        },
+                        {
+                            "name": "2. Revelación de la Vida",
+                            "children": [
+                                {"name": "La Vida (el Dios eterno) se Manifestó"},
+                                {
+                                    "name": "La Encarnación (El Verbo se hizo carne)",
+                                    "children": [{"name": "Explicación: Unión Hipostática: Naturaleza divina y humana en una persona"}]
+                                },
+                                {"name": "Importancia de la Revelación (Dios tomó la iniciativa)"},
+                                {"name": "Esperanza en Cristo"}
+                            ]
+                        },
+                        {
+                            "name": "3. Proclamación del Evangelio",
+                            "children": [
+                                {"name": "Acción de los Apóstoles: Testimonio y anuncio"},
+                                {"name": "Contenido del Evangelio (Juan 1: El Verbo era Dios)"},
+                                {"name": "Mensaje Central de la Cruz (Separados de Dios por el pecado)"},
+                                {
+                                    "name": "La Buena Noticia",
+                                    "children": [
+                                        {"name": "Dios envió a su Hijo para darnos vida"},
+                                        {"name": "Jesús murió por los pecadores"},
+                                        {"name": "Resucitó"},
+                                        {"name": "Quien cree en Él tiene vida eterna"}
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        function createNodeElement(nodeData, level = 0) {
+            const nodeContainer = document.createElement('div');
+            nodeContainer.classList.add('node-container');
+
+            const nodeElement = document.createElement('div');
+            nodeElement.classList.add('node');
+            nodeElement.classList.add(`level-${level}`); 
+
+            if (level === 0) {
+                nodeElement.classList.add('root-node');
+            }
+
+            const toggleIcon = document.createElement('span');
+            toggleIcon.classList.add('toggle-icon');
+            
+            const nodeContent = document.createElement('span');
+            nodeContent.classList.add('node-content');
+            nodeContent.textContent = nodeData.name;
+
+            nodeElement.appendChild(toggleIcon);
+            nodeElement.appendChild(nodeContent);
+            nodeContainer.appendChild(nodeElement);
+
+            if (nodeData.children && nodeData.children.length > 0) {
+                nodeElement.classList.add('has-children');
+                toggleIcon.textContent = '-'; 
+
+                const childrenContainer = document.createElement('div');
+                childrenContainer.classList.add('children-container');
+                
+                nodeData.children.forEach(child => {
+                    childrenContainer.appendChild(createNodeElement(child, level + 1));
+                });
+                nodeContainer.appendChild(childrenContainer);
+
+                toggleIcon.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent click from bubbling to nodeElement if that also has a listener
+                    childrenContainer.classList.toggle('collapsed');
+                    toggleIcon.textContent = childrenContainer.classList.contains('collapsed') ? '+' : '-';
+                });
+            } else {
+                toggleIcon.style.visibility = 'hidden'; 
+            }
+            return nodeContainer;
+        }
+        
+        function initializeMindMap() {
+            const mindMapContainer = document.getElementById('mindMapContainer');
+            // Clear previous content if any (e.g., if re-initializing, though not strictly necessary with current setup)
+            // while (mindMapContainer.firstChild) {
+            //     mindMapContainer.removeChild(mindMapContainer.firstChild);
+            // }
+            mindMapContainer.appendChild(createNodeElement(mindMapData));
+        }
+
+        // Call openTab for the first tab on page load,
+        // this will also trigger initializeMindMap if the first tab is the mind map.
+        // However, we want the analysis tab to be default.
+        // The initializeMindMap will be called when the mindmap tab is clicked for the first time.
     </script>
 </body>
 </html>
